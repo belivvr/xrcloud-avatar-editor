@@ -1,0 +1,84 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.122.1/containers/docker-existing-dockerfile
+{
+    "name": "${containerWorkspaceFolderBasename}",
+    "context": ".",
+    "dockerFile": "Dockerfile",
+    "mounts": [
+        // docker from docker
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    ],
+    "containerEnv": {
+        "WORKSPACE_ROOT": "${containerWorkspaceFolder}",
+        "PROJECT_NAME":"${containerWorkspaceFolderBasename}",
+        "HOST_PATH": "${localWorkspaceFolder}",
+        "NODE_ENV": "development"
+    },
+    // "remoteUser": "hunjuly",
+    // 이 프로젝트에서 실행하는 모든 컨테이너는 같은 network에 있어야 한다
+    "initializeCommand": "docker network create ${containerWorkspaceFolderBasename} || true",
+    "postCreateCommand": "bash scripts/init_dev_env.sh ",
+    "runArgs": [
+        "--network",
+        "${containerWorkspaceFolderBasename}",
+        "--name",
+        "${containerWorkspaceFolderBasename}-vscode"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "ms-azuretools.vscode-docker",
+                "esbenp.prettier-vscode",
+                "firsttris.vscode-jest-runner",
+                "foxundermoon.shell-format",
+                "well-ar.plantuml",
+                "ms-vscode.live-server",
+                "github.vscode-pull-request-github",
+                "mutantdino.resourcemonitor"
+            ],
+            "settings": {
+                "typescript.tsc.autoDetect": "off",
+                "typescript.disableAutomaticTypeAcquisition": true,
+                "prettier.enableDebugLogs": true,
+                "livePreview.portNumber": 3030,
+                "remote.downloadExtensionsLocally": true,
+                "typescript.format.enable": false,
+                "javascript.format.enable": false,
+                "editor.defaultFormatter": "esbenp.prettier-vscode",
+                "[dockerfile]": {
+                    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+                },
+                "[jsonc]": {
+                    "editor.defaultFormatter": "vscode.json-language-features"
+                },
+                "[dotenv]": {
+                    "editor.defaultFormatter": "foxundermoon.shell-format"
+                },
+                "[shellscript]": {
+                    "editor.defaultFormatter": "foxundermoon.shell-format"
+                },
+                "[ignore]": {
+                    "editor.defaultFormatter": "foxundermoon.shell-format"
+                },
+                "jestrunner.codeLensSelector": "**/{*.test,*.spec,__tests__/*}.{js,jsx,ts,tsx}",
+                "plantuml.server": "https://www.plantuml.com/plantuml",
+                "plantuml.render": "PlantUMLServer",
+                "githubIssues.queries": [
+                    {
+                        "label": "My Issues",
+                        "query": "default"
+                    },
+                    {
+                        "label": "Created Issues",
+                        "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+                    },
+                    {
+                        "label": "All Issues",
+                        "query": "repo:${owner}/${repository} sort:updated-desc"
+                    }
+                ]
+            }
+        }
+    }
+}
