@@ -1,7 +1,7 @@
 import { RefObject, useCallback, useRef, useState } from 'react'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { OrbitControls } from '@react-three/drei'
-import Avatar from './Avatar'
+import { AvatarView } from './AvatarView'
 import Light from './Light'
 
 const distanceRange = { min: 0.5, max: 1.5 }
@@ -24,7 +24,7 @@ export function Preview(): JSX.Element {
     return (
         <group>
             <group position={[0, modelHeight, 0]}>
-                <Avatar />
+                <AvatarView />
                 <Light />
             </group>
 
