@@ -3,7 +3,7 @@ import { Group } from 'three'
 
 export interface AvatarContextValue {
     root: Root
-    parts?: Part
+    parts?: PartOld
     current: Current
 }
 
@@ -18,7 +18,7 @@ export interface RootOptions {
     animation?: string | 'Walking' | 'Idle'
 }
 
-export type Part = Record<string, PartValue>
+export type PartOld = Record<string, PartValue>
 
 interface PartValue {
     defaultResource?: string
@@ -31,3 +31,48 @@ export interface Resource {
 }
 
 export type Current = Record<string, Resource | null>
+
+export interface Part {
+    fileUrl: string
+}
+
+export interface DefaultParts {
+    hair?: Part
+    face?: Part
+    body?: Part
+    leg?: Part
+    foot?: Part
+    hand?: Part
+    glass?: Part
+}
+
+export interface AvatarBlueprint {
+    defaultParts: DefaultParts
+    skeleton: AvatarSkeleton
+    hairs: Part[]
+    faces: Part[]
+    bodies: Part[]
+    legs: Part[]
+    feet: Part[]
+    hands: Part[]
+    glasses: Part[]
+}
+
+export interface AvatarSkeleton {
+    fileUrl: string
+    animations: string[]
+}
+
+export interface AvatarInstance {
+    currentAnimation: string // 현재 적용된 애니메이션
+    skeleton: AvatarSkeleton // 사용된 뼈대 정보
+    parts: {
+        hair: Part
+        face: Part
+        body: Part
+        leg: Part
+        foot: Part
+        hand: Part
+        glass: Part
+    }
+}

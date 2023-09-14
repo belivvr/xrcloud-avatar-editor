@@ -1,11 +1,12 @@
-import { Part, RootOptions } from '../contexts/AvatarContext.type'
+import { AvatarBlueprint, PartOld, RootOptions } from '../contexts/AvatarContext.type'
 import { body } from './body'
 import { face } from './face'
+import { femaleAvatar } from './femaleAvatar'
 import { foot } from './foot'
 import { glass } from './glass'
 import { hair } from './hair'
-import { leg } from './leg'
 import { hand } from './hand'
+import { leg } from './leg'
 
 export const getRoot = (): RootOptions => {
     let root: RootOptions
@@ -17,7 +18,7 @@ export const getRoot = (): RootOptions => {
     return root
 }
 
-export const getParts = (): Part => {
+export const getParts = (): PartOld => {
     return {
         Hair: {
             defaultResource: '1',
@@ -48,4 +49,9 @@ export const getParts = (): Part => {
             resources: hand
         }
     }
+}
+
+
+export const getAvatarBlueprint = (): AvatarBlueprint => {
+    return femaleAvatar
 }

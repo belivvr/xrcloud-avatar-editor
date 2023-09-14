@@ -4,7 +4,7 @@ import { getParts, getRoot } from '../configs'
 import {
     AvatarContextValue,
     Current,
-    Part,
+    PartOld,
     RootOptions
 } from './AvatarContext.type'
 
@@ -13,7 +13,7 @@ export const AvatarContext = createContext<AvatarContextValue>({
     current: {}
 })
 
-const setDefaultCurrentByPart = (parts: Part): Current => {
+const setDefaultCurrentByPart = (parts: PartOld): Current => {
     const obj: Current = {}
 
     for (const key in parts) {
@@ -33,7 +33,7 @@ export function AvatarProvider({ children }: { children: ReactNode }) {
     const rootRef = useRef<Group>(null!)
     const [current, setCurrent] = useState<Current>(null!)
     const [root, setRoot] = useState<RootOptions>(getRoot())
-    const [parts, setParts] = useState<Part>(getParts())
+    const [parts, setParts] = useState<PartOld>(getParts())
 
     useEffect(() => {
         setRoot(getRoot())
