@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { BufferGeometry, MeshStandardMaterial, Skeleton, SkinnedMesh } from 'three'
 import { GLTF } from 'three-stdlib'
 import { useAvatar } from '../contexts/AvatarContext'
+import { PartName } from '../contexts/AvatarContext.type'
 
 export interface PartData {
     geometry?: BufferGeometry
@@ -18,18 +19,17 @@ export type PartProps = {
 export type GLTFResult = GLTF & PartProps
 
 interface Props {
-    name: string
+    name: PartName
     rootNodes: Record<string, SkinnedMesh>
 }
 
-export default function Part({ name, rootNodes }: Props) {
+export function PartView({ name, rootNodes }: Props) {
     const [data, setData] = useState<PartData>({})
 
-    const {
-        current: { [name]: currentResource }
-    } = useAvatar()
+    const { avatarInstance } = useAvatar()
 
-    const { nodes, materials } = useGLTF(currentResource ? currentResource.fileUrl : []) as GLTFResult
+    const part = avatarInstance.parts[name]
+    const { nodes, materials } = useGLTF(part ? part.fileUrl : []) as GLTFResult
 
     useEffect(() => {
         if (nodes && materials) {
