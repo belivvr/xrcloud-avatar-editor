@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useRef, useState } from 'react'
-import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
+// import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 // import { OrbitControls } from '@react-three/drei'
 import Avatar from './Avatar'
 import Light from './Light'
@@ -7,7 +7,7 @@ import Light from './Light'
 // const distanceRange = { min: 0.5, max: 1.5 }
 const modelHeightRange = { min: -1.7, max: -1.2 }
 
-export default function Preview(): JSX.Element {
+export  function Preview(): JSX.Element {
     // const controlsRef = useRef<OrbitControlsImpl>(null)
     // const orbitControlsRef: RefObject<OrbitControlsImpl> = controlsRef
 
@@ -23,7 +23,7 @@ export default function Preview(): JSX.Element {
 
     return (
         <group>
-            <group position={[0, modelHeight, 0]}>
+            <group position={[0, -0.85, 3.5]}>
                 <Avatar />
                 <Light />
             </group>

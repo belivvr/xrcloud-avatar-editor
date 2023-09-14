@@ -20,6 +20,7 @@ export default function Part({ name, root }: Props) {
     const { nodes, materials } = useGLTF(currentResource ? currentResource.fileUrl : []) as GLTFResult
 
     useEffect(() => {
+        console.log(name,nodes[name])
         setData({
             geometry: nodes[name].geometry ?? root.geometry,
             material: materials[Object.keys(materials)[0]] ?? root.material,

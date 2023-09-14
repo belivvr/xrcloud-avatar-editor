@@ -4,34 +4,34 @@ import { AnimationClip, AnimationMixer } from 'three'
 import { useAvatar } from '../contexts/AvatarContext'
 
 interface Props {
-  animations: AnimationClip[]
+    animations: AnimationClip[]
 }
 
 export default function AnimationsControl({ animations }: Props) {
-  const { type, root } = useAvatar()
-  const [mixer, setMixer] = useState<AnimationMixer>(null!)
-  useEffect(() => {
-    setMixer(new AnimationMixer(root.ref.current))
-  }, [type, root])
+    const { type, root } = useAvatar()
+    const [mixer, setMixer] = useState<AnimationMixer>(null!)
+    useEffect(() => {
+        setMixer(new AnimationMixer(root.ref.current))
+    }, [type, root])
 
-  useEffect(() => {
-    if (mixer) {
-      animations.forEach((clip) => {
-        const action = mixer.clipAction(clip)
-        if (clip.name && clip.name === root.animation) {
-          const action = mixer.clipAction(clip)
-          action.play()
+    useEffect(() => {
+        if (mixer) {
+            animations.forEach((clip) => {
+                const action = mixer.clipAction(clip)
+                if (clip.name && clip.name === root.animation) {
+                    const action = mixer.clipAction(clip)
+                    action.play()
+                }
+                action.reset()
+            })
         }
-        action.reset()
-      })
-    }
-  }, [type, root, animations, mixer])
+    }, [type, root, animations, mixer])
 
-  useFrame((state, delta) => {
-    if (mixer) {
-      mixer.update(delta)
-    }
-  })
+    useFrame((state, delta) => {
+        if (mixer) {
+            mixer.update(delta)
+        }
+    })
 
-  return <></>
+    return <></>
 }

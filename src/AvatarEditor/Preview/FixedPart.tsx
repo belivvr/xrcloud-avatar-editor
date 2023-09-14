@@ -6,7 +6,9 @@ interface Props {
 }
 
 export default function FixedPart({ name, root }: Props) {
-  return (
+    console.log(name,root)
+
+    return (
     <skinnedMesh
       name={name}
       geometry={root.geometry}

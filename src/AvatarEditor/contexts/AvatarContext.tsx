@@ -32,7 +32,7 @@ export const AvatarDispatchContext = createContext<AvatarDispatchContextValue>({
 export function AvatarProvider({ children }: { children: ReactNode }) {
   const rootRef = useRef<Group>(null!)
   const [current, setCurrent] = useState<Current>(null!)
-  const [type, setType] = useState<AvatarType>(AvatarType.MALE)
+  const [type, setType] = useState<AvatarType>(AvatarType.FEMALE)
   const [root, setRoot] = useState<RootOptions>(getRoot(type))
   const [parts, setParts] = useState<Part>(getParts(type))
 
