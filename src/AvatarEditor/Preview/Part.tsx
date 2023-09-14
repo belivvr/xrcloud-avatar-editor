@@ -1,17 +1,29 @@
 import { useGLTF } from '@react-three/drei'
 import { useEffect, useState } from 'react'
+import { BufferGeometry, MeshStandardMaterial, Skeleton, SkinnedMesh } from 'three'
+import { GLTF } from 'three-stdlib'
 import { useAvatar } from '../contexts/AvatarContext'
-import { GLTFResult, PartData } from './Avatar'
+
+export interface PartData {
+    geometry?: BufferGeometry
+    material?: MeshStandardMaterial
+    skeleton?: Skeleton
+}
+
+export type PartProps = {
+    nodes: Record<string, SkinnedMesh>
+    materials: Record<string, MeshStandardMaterial>
+}
+
+export type GLTFResult = GLTF & PartProps
 
 interface Props {
     name: string
-    root: PartData
+    rootNodes: Record<string, SkinnedMesh>
 }
 
-export default function Part({ name, root }: Props) {
-    const [data, setData] = useState<PartData>({
-        skeleton: root.skeleton
-    })
+export default function Part({ name, rootNodes }: Props) {
+    const [data, setData] = useState<PartData>({})
 
     const {
         current: { [name]: currentResource }
@@ -20,15 +32,16 @@ export default function Part({ name, root }: Props) {
     const { nodes, materials } = useGLTF(currentResource ? currentResource.fileUrl : []) as GLTFResult
 
     useEffect(() => {
-        console.log(name,nodes[name])
-        setData({
-            geometry: nodes[name].geometry ?? root.geometry,
-            material: materials[Object.keys(materials)[0]] ?? root.material,
-            skeleton: root.skeleton
-        })
-    }, [currentResource, materials, name, nodes, root.geometry, root.material, root.skeleton])
+        if (nodes && materials) {
+            setData({
+                geometry: nodes[name].geometry,
+                material: materials[Object.keys(materials)[0]],
+                skeleton: rootNodes[name].skeleton
+            })
+        }
+    }, [materials, name, nodes, rootNodes])
 
-    if (currentResource) {
+    if (nodes && materials) {
         return (
             <skinnedMesh
                 name={name}
@@ -38,13 +51,6 @@ export default function Part({ name, root }: Props) {
             />
         )
     } else {
-        return (
-            <skinnedMesh
-                name={name}
-                geometry={root.geometry}
-                material={root.material}
-                skeleton={root.skeleton}
-            />
-        )
+        return <group name={'name'} />
     }
 }

@@ -1,45 +1,41 @@
 import styled from '@emotion/styled'
-import { useAvatar, useSetAvatar } from '../../contexts/AvatarContext'
-import { AvatarType } from '../../contexts/AvatarContext.type'
-import { BiMaleSign, BiFemaleSign } from 'react-icons/bi'
+import React from 'react'
 
 export default function SelectType() {
-  const { type } = useAvatar()
-  const { setType } = useSetAvatar()
-  return (
-    <Ul>
-      <Li onClick={() => setType(AvatarType.MALE)} active={type === 'male'}>
-        <BiMaleSign />
-      </Li>
-      <Li onClick={() => setType(AvatarType.FEMALE)} active={type === 'female'}>
-        <BiFemaleSign />
-      </Li>
-    </Ul>
-  )
+    return (
+        <Ul>
+            {/* <Li onClick={() => setType(AvatarType.MALE)} active={type === 'male'}>
+                <BiMaleSign />
+            </Li>
+            <Li onClick={() => setType(AvatarType.FEMALE)} active={type === 'female'}>
+                <BiFemaleSign />
+            </Li> */}
+        </Ul>
+    )
 }
 
 const Ul = styled.ul`
-  display: flex;
-  gap: 8px;
-  @media (max-width: 768px) {
-    justify-content: flex-end;
-  }
+    display: flex;
+    gap: 8px;
+    @media (max-width: 768px) {
+        justify-content: flex-end;
+    }
 `
 
 const Li = styled.li`
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: 1px solid #dbdbdb;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #dbdbdb;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #dbdbdb;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #dbdbdb;
 
-  ${({ active }: { active: boolean }) =>
-    active &&
-    `
+    ${({ active }: { active: boolean }) =>
+        active &&
+        `
     border: 1px solid #003594;
     color: #003594
   `};

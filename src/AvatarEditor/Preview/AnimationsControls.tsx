@@ -8,11 +8,11 @@ interface Props {
 }
 
 export default function AnimationsControl({ animations }: Props) {
-    const { type, root } = useAvatar()
+    const { root } = useAvatar()
     const [mixer, setMixer] = useState<AnimationMixer>(null!)
     useEffect(() => {
         setMixer(new AnimationMixer(root.ref.current))
-    }, [type, root])
+    }, [root])
 
     useEffect(() => {
         if (mixer) {
@@ -25,7 +25,7 @@ export default function AnimationsControl({ animations }: Props) {
                 action.reset()
             })
         }
-    }, [type, root, animations, mixer])
+    }, [root, animations, mixer])
 
     useFrame((state, delta) => {
         if (mixer) {
