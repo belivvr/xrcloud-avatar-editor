@@ -51,6 +51,6 @@ export function PartView({ name, rootNodes }: Props) {
             />
         )
     } else {
-        return <group name={'name'} />
+        return <group/>
     }
 }

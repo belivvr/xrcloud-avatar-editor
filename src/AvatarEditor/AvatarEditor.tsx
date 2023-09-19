@@ -1,8 +1,9 @@
+import styled from '@emotion/styled'
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
-import { AvatarProvider } from './contexts/AvatarContext'
 import { Preview } from './Preview'
-import styled from '@emotion/styled'
+import { AvatarProvider } from './contexts/AvatarContext'
+import { ToolContainer } from './ToolContainer'
 
 export function AvatarEditor() {
     return (
@@ -14,6 +15,7 @@ export function AvatarEditor() {
                     </StyledCanvas>
                 </Suspense>
             </CanvasContainer>
+            <ToolContainer />
         </AvatarProvider>
     )
 }

@@ -4,6 +4,7 @@ import { Group } from 'three'
 export interface AvatarContextValue {
     avatarInstance: AvatarInstance
     rootRef: MutableRefObject<Group | null>
+    setBody: (bodyNo: number) => void
 }
 
 export interface Part {
