@@ -5,6 +5,7 @@ export interface AvatarContextValue {
     avatarInstance: AvatarInstance
     rootRef: MutableRefObject<Group | null>
     setBody: (bodyNo: number) => void
+    setSkeleton: (bodyNo: number) => void
 }
 
 export interface Part {
