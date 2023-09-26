@@ -1,7 +1,7 @@
 import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useState } from 'react'
-import { AnimationMixer } from 'three'
+import { AnimationMixer, AnimationClip } from 'three'
 import { useAvatar } from '../contexts/AvatarContext'
 import { GLTFResult, PartView } from './PartView'
 
@@ -16,14 +16,11 @@ export function AvatarView() {
 
     useEffect(() => {
         if (mixer) {
-            animations.forEach((clip) => {
-                const action = mixer.clipAction(clip)
-                if (clip.name && clip.name === avatarInstance.currentAnimation) {
-                    const action = mixer.clipAction(clip)
-                    action.play()
-                }
-                action.reset()
-            })
+            mixer.stopAllAction()
+
+            const clip = AnimationClip.findByName(animations, avatarInstance.currentAnimation)
+            const action = mixer.clipAction(clip)
+            action.play()
         }
     }, [animations, avatarInstance.currentAnimation, mixer])
 

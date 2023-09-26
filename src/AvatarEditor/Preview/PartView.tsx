@@ -33,7 +33,6 @@ export function PartView({ name, rootNodes }: Props) {
 
     useEffect(() => {
         if (nodes && materials) {
-            console.log(name,nodes)
             setData({
                 geometry: nodes[name].geometry,
                 material: materials[Object.keys(materials)[0]],
