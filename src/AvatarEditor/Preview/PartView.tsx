@@ -41,7 +41,7 @@ export function PartView({ name, rootNodes }: Props) {
         }
     }, [materials, name, nodes, rootNodes])
 
-    if (nodes && materials) {
+    if (data.geometry && data.material && data.skeleton) {
         return (
             <skinnedMesh
                 name={name}
