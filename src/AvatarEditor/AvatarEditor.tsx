@@ -9,7 +9,7 @@ export function AvatarEditor() {
     return (
         <AvatarProvider>
             <CanvasContainer>
-                <Suspense fallback={<p>사용자 정보 로딩중...</p>}>
+                <Suspense fallback={<p>로딩중...</p>}>
                     <StyledCanvas>
                         <Preview />
                     </StyledCanvas>
