@@ -8,18 +8,14 @@ export const AvatarContext = React.createContext({} as AvatarContextValue)
 
 export function AvatarProvider({ children }: { children: ReactNode }) {
     const rootRef = useRef<Group>(null)
-    const [avatarBlueprint, setAvatarBlueprint] = useState<AvatarBlueprint>(allAvatarBlueprints[1])
+    const [avatarBlueprint, setAvatarBlueprint] = useState<AvatarBlueprint>(allAvatarBlueprints[0])
     const [avatarInstance, setAvatarInstance] = useState<AvatarInstance>(makeAvatarInstance(avatarBlueprint))
 
     useEffect(() => {
         loopThroughBlueprint(avatarBlueprint, (item) => {
-            if (item.fileUrl) {
-                window.requestIdleCallback(() => {
-                    useGLTF.preload(item.fileUrl)
-                })
-            }
+            useGLTF.preload(item.fileUrl)
         })
-    }, [avatarBlueprint, avatarInstance.skeleton])
+    }, [avatarBlueprint])
 
     const setBody = (bodyNo: number) => {
         const updatedFemaleAvatarInstance = {

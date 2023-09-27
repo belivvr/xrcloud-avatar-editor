@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { BufferGeometry, MeshStandardMaterial, Skeleton, SkinnedMesh } from 'three'
 import { GLTF } from 'three-stdlib'
 import { useAvatar } from '../contexts/AvatarContext'
-import { PartName } from '../contexts/AvatarContext.type'
+import { AvatarPartName } from '../contexts/AvatarContext.type'
 
 export interface PartData {
     geometry?: BufferGeometry
@@ -19,7 +19,7 @@ export type PartProps = {
 export type GLTFResult = GLTF & PartProps
 
 interface Props {
-    name: PartName
+    name: AvatarPartName
     rootNodes: Record<string, SkinnedMesh>
 }
 

@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react'
 import { AnimationMixer, AnimationClip } from 'three'
 import { useAvatar } from '../contexts/AvatarContext'
 import { GLTFResult, PartView } from './PartView'
+/**
+ * 몇 번씩 로드하면 undefined 오류나는 문제가 있음
+ * male/legs/leg-01.glb은 animation을 제외한 것으로 보인다. 크기가 많이 줄어든다.
+ */
 
 export function AvatarView() {
     const { avatarInstance, rootRef } = useAvatar()

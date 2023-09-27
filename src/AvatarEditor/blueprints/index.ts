@@ -1,8 +1,8 @@
-import { AvatarBlueprint, AvatarInstance } from '../contexts/AvatarContext.type'
+import { AvatarBlueprint, AvatarInstance, AvatarPart } from '../contexts/AvatarContext.type'
 import { femaleAvatarBlueprint } from './femaleAvatar'
 import { maleAvatarBlueprint } from './maleAvatar'
 
-type BlueprintCallback = (item: any) => void
+type BlueprintCallback = (item: AvatarPart) => void
 
 export function loopThroughBlueprint(blueprint: AvatarBlueprint, callback: BlueprintCallback) {
     const keys = Object.keys(blueprint) as Array<keyof typeof blueprint>
