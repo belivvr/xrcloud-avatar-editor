@@ -12,20 +12,43 @@ import { GLTFResult, PartView } from './PartView'
 export function AvatarView() {
     const { avatarInstance, rootRef } = useAvatar()
     const { nodes, animations } = useGLTF(avatarInstance.skeleton.fileUrl) as GLTFResult
-    const [mixer, setMixer] = useState<AnimationMixer>(null!)
+    const [mixer, setMixer] = useState<AnimationMixer | null>(null)
 
     useEffect(() => {
-        if (rootRef.current) setMixer(new AnimationMixer(rootRef.current))
-    }, [rootRef])
+        const root = rootRef.current
+        let mixer: AnimationMixer | null = null
+
+        if (root) {
+            mixer = new AnimationMixer(root)
+            setMixer(mixer)
+            // console.log(rootRef.current?.children)
+        }
+
+        // return () => {
+        //     if (mixer && root) {
+        //         mixer.stopAllAction()
+        //         mixer.uncacheRoot(root)
+        //     }
+        // }
+    }, [rootRef, avatarInstance.skeleton.fileUrl])
 
     useEffect(() => {
+        let clip: AnimationClip | null = null
+
         if (mixer) {
             mixer.stopAllAction()
 
-            const clip = AnimationClip.findByName(animations, avatarInstance.currentAnimation)
+            clip = AnimationClip.findByName(animations, avatarInstance.currentAnimation)
             const action = mixer.clipAction(clip)
             action.play()
         }
+
+        // return () => {
+        // if (clip && mixer) {
+        // mixer.uncacheClip(clip)
+        // console.log('Release Clip')
+        // }
+        // }
     }, [animations, avatarInstance.currentAnimation, mixer])
 
     useFrame((state, delta) => {
@@ -38,7 +61,6 @@ export function AvatarView() {
         <group>
             <group name="Scene">
                 <group name="Armature" ref={rootRef} position={[0, 0, 0]}>
-                    <primitive object={nodes.Hips} />
                     <PartView name={'Hair'} rootNodes={nodes} />
                     <PartView name={'Face'} rootNodes={nodes} />
                     <PartView name={'Body'} rootNodes={nodes} />
@@ -46,6 +68,7 @@ export function AvatarView() {
                     <PartView name={'Hand'} rootNodes={nodes} />
                     <PartView name={'Foot'} rootNodes={nodes} />
                     <PartView name={'Glass'} rootNodes={nodes} />
+                    <primitive key={avatarInstance.skeleton.fileUrl} object={nodes.Hips} />
                 </group>
             </group>
         </group>
