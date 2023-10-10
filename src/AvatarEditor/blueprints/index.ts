@@ -1,4 +1,4 @@
-import { AvatarBlueprint, AvatarInstance, AvatarPart } from '../contexts/AvatarContext.type'
+import { AvatarBlueprint, AvatarInstance, AvatarPart } from '../contexts/AvatarContext'
 import { femaleAvatarBlueprint } from './femaleAvatar'
 import { maleAvatarBlueprint } from './maleAvatar'
 

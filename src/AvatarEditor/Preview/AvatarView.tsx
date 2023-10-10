@@ -8,10 +8,9 @@ import { GLTFResult, PartView } from './PartView'
  * 몇 번씩 로드하면 undefined 오류나는 문제가 있음
  * male/legs/leg-01.glb은 animation을 제외한 것으로 보인다. 크기가 많이 줄어든다.
  */
-
 export function AvatarView() {
     const { avatarInstance, rootRef } = useAvatar()
-    const { nodes, animations } = useGLTF(avatarInstance.skeleton.fileUrl) as GLTFResult
+    const { nodes:rootNodes, animations } = useGLTF(avatarInstance.skeleton.fileUrl) as GLTFResult
     const [mixer, setMixer] = useState<AnimationMixer | null>(null)
 
     useEffect(() => {
@@ -21,15 +20,14 @@ export function AvatarView() {
         if (root) {
             mixer = new AnimationMixer(root)
             setMixer(mixer)
-            // console.log(rootRef.current?.children)
         }
 
-        // return () => {
-        //     if (mixer && root) {
-        //         mixer.stopAllAction()
-        //         mixer.uncacheRoot(root)
-        //     }
-        // }
+        return () => {
+            if (mixer && root) {
+                mixer.stopAllAction()
+                mixer.uncacheRoot(root)
+            }
+        }
     }, [rootRef, avatarInstance.skeleton.fileUrl])
 
     useEffect(() => {
@@ -39,16 +37,20 @@ export function AvatarView() {
             mixer.stopAllAction()
 
             clip = AnimationClip.findByName(animations, avatarInstance.currentAnimation)
-            const action = mixer.clipAction(clip)
-            action.play()
+
+            if (clip) {
+                mixer.clipAction(clip).play()
+            }else{
+                alert(`The '${avatarInstance.currentAnimation}' does not exist.`)
+            }
         }
 
-        // return () => {
-        // if (clip && mixer) {
-        // mixer.uncacheClip(clip)
-        // console.log('Release Clip')
-        // }
-        // }
+        return () => {
+            if (clip && mixer) {
+                mixer.stopAllAction()
+                mixer.uncacheClip(clip)
+            }
+        }
     }, [animations, avatarInstance.currentAnimation, mixer])
 
     useFrame((state, delta) => {
@@ -61,14 +63,14 @@ export function AvatarView() {
         <group>
             <group name="Scene">
                 <group name="Armature" ref={rootRef} position={[0, 0, 0]}>
-                    <PartView name={'Hair'} rootNodes={nodes} />
-                    <PartView name={'Face'} rootNodes={nodes} />
-                    <PartView name={'Body'} rootNodes={nodes} />
-                    <PartView name={'Leg'} rootNodes={nodes} />
-                    <PartView name={'Hand'} rootNodes={nodes} />
-                    <PartView name={'Foot'} rootNodes={nodes} />
-                    <PartView name={'Glass'} rootNodes={nodes} />
-                    <primitive key={avatarInstance.skeleton.fileUrl} object={nodes.Hips} />
+                    <PartView name={'Hair'} rootNodes={rootNodes} />
+                    <PartView name={'Face'} rootNodes={rootNodes} />
+                    <PartView name={'Body'} rootNodes={rootNodes} />
+                    <PartView name={'Leg'} rootNodes={rootNodes} />
+                    <PartView name={'Hand'} rootNodes={rootNodes} />
+                    <PartView name={'Foot'} rootNodes={rootNodes} />
+                    <PartView name={'Glass'} rootNodes={rootNodes} />
+                    <primitive key={avatarInstance.skeleton.fileUrl} object={rootNodes.Hips} />
                 </group>
             </group>
         </group>

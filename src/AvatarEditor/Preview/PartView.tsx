@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { BufferGeometry, MeshStandardMaterial, Skeleton, SkinnedMesh } from 'three'
 import { GLTF } from 'three-stdlib'
 import { useAvatar } from '../contexts/AvatarContext'
-import { AvatarPartName } from '../contexts/AvatarContext.type'
+import { AvatarPartName } from '../contexts/AvatarContext'
 
 export interface PartData {
     geometry?: BufferGeometry
