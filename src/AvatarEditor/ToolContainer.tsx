@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useAvatar } from './contexts/AvatarContext'
 
 export function ToolContainer() {
-    const { setBody, setSkeleton, setAnimation } = useAvatar()
+    const { setBody, setSkeleton, setCurrentAnimation } = useAvatar()
 
     return (
         <div>
@@ -11,13 +11,14 @@ export function ToolContainer() {
                 <ChangeButton onClick={() => setSkeleton(1)}>Skeleton2</ChangeButton>
             </Container>
             <Container>
-                <ChangeButton onClick={() => setAnimation(0)}>Running</ChangeButton>
-                <ChangeButton onClick={() => setAnimation(1)}>Walking</ChangeButton>
-                <ChangeButton onClick={() => setAnimation(2)}>Idle</ChangeButton>
+                <ChangeButton onClick={() => setCurrentAnimation('Running')}>Running</ChangeButton>
+                <ChangeButton onClick={() => setCurrentAnimation('Walking')}>Walking</ChangeButton>
+                <ChangeButton onClick={() => setCurrentAnimation('Idle')}>Idle</ChangeButton>
             </Container>
             <Container>
                 <ChangeButton onClick={() => setBody(0)}>Body1</ChangeButton>
                 <ChangeButton onClick={() => setBody(1)}>Body2</ChangeButton>
+                <ChangeButton onClick={() => setBody(2)}>Body3</ChangeButton>
             </Container>
         </div>
     )

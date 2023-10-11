@@ -26,9 +26,9 @@ interface Props {
 export function PartView({ name, rootNodes }: Props) {
     const [data, setData] = useState<PartData>({})
 
-    const { avatarInstance } = useAvatar()
+    const { parts } = useAvatar()
 
-    const part = avatarInstance.parts[name]
+    const part = parts[name]
     const { nodes, materials } = useGLTF(part ? part.fileUrl : []) as GLTFResult
 
     useEffect(() => {

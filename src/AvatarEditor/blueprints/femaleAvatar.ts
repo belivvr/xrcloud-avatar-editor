@@ -9,7 +9,8 @@ export const femaleAvatarBlueprint: AvatarBlueprint = {
     faces: [{ fileUrl: '/avatars/female/faces/face-01.glb' }],
     bodies: [
         { fileUrl: '/avatars/female/bodies/body-01.glb' },
-        { fileUrl: '/avatars/female/bodies/body-02.glb' }
+        { fileUrl: '/avatars/female/bodies/body-02.glb' },
+        { fileUrl: '/avatars/female/bodies/body-03.glb' }
     ],
     legs: [{ fileUrl: '/avatars/female/legs/leg-01.glb' }],
     feet: [{ fileUrl: '/avatars/female/feet/foot-01.glb' }],

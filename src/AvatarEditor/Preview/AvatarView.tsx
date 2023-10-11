@@ -1,16 +1,16 @@
 import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useEffect, useState } from 'react'
-import { AnimationMixer, AnimationClip } from 'three'
+import { AnimationClip, AnimationMixer } from 'three'
 import { useAvatar } from '../contexts/AvatarContext'
 import { GLTFResult, PartView } from './PartView'
+
 /**
- * 몇 번씩 로드하면 undefined 오류나는 문제가 있음
  * male/legs/leg-01.glb은 animation을 제외한 것으로 보인다. 크기가 많이 줄어든다.
  */
 export function AvatarView() {
-    const { avatarInstance, rootRef } = useAvatar()
-    const { nodes:rootNodes, animations } = useGLTF(avatarInstance.skeleton.fileUrl) as GLTFResult
+    const { currentAnimation, skeleton, rootRef } = useAvatar()
+    const { nodes: rootNodes, animations } = useGLTF(skeleton.fileUrl) as GLTFResult
     const [mixer, setMixer] = useState<AnimationMixer | null>(null)
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export function AvatarView() {
                 mixer.uncacheRoot(root)
             }
         }
-    }, [rootRef, avatarInstance.skeleton.fileUrl])
+    }, [rootRef, skeleton.fileUrl])
 
     useEffect(() => {
         let clip: AnimationClip | null = null
@@ -36,12 +36,12 @@ export function AvatarView() {
         if (mixer) {
             mixer.stopAllAction()
 
-            clip = AnimationClip.findByName(animations, avatarInstance.currentAnimation)
+            clip = AnimationClip.findByName(animations, currentAnimation)
 
             if (clip) {
                 mixer.clipAction(clip).play()
-            }else{
-                alert(`The '${avatarInstance.currentAnimation}' does not exist.`)
+            } else {
+                alert(`The '${currentAnimation}' does not exist.`)
             }
         }
 
@@ -51,7 +51,7 @@ export function AvatarView() {
                 mixer.uncacheClip(clip)
             }
         }
-    }, [animations, avatarInstance.currentAnimation, mixer])
+    }, [animations, currentAnimation, mixer])
 
     useFrame((state, delta) => {
         if (mixer) {
@@ -70,7 +70,7 @@ export function AvatarView() {
                     <PartView name={'Hand'} rootNodes={rootNodes} />
                     <PartView name={'Foot'} rootNodes={rootNodes} />
                     <PartView name={'Glass'} rootNodes={rootNodes} />
-                    <primitive key={avatarInstance.skeleton.fileUrl} object={rootNodes.Hips} />
+                    <primitive key={skeleton.fileUrl} object={rootNodes.Hips} />
                 </group>
             </group>
         </group>
