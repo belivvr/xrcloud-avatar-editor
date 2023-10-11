@@ -6,7 +6,8 @@ export const femaleAvatarBlueprint: AvatarBlueprint = {
         animations: ['Running', 'Walking', 'Idle']
     },
     hairs: [{ fileUrl: '/avatars/female/hairs/hair-01.glb' }],
-    faces: [{ fileUrl: '/avatars/female/faces/face-01.glb' }],
+    faces: [{ fileUrl: '/avatars/female/faces/face-01.glb' },
+    { fileUrl: '/avatars/female/faces/face-02.glb' }],
     bodies: [
         { fileUrl: '/avatars/female/bodies/body-01.glb' },
         { fileUrl: '/avatars/female/bodies/body-02.glb' },

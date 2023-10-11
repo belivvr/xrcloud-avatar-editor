@@ -5,13 +5,11 @@ import { AnimationClip, AnimationMixer } from 'three'
 import { useAvatar } from '../contexts/AvatarContext'
 import { GLTFResult, PartView } from './PartView'
 
-/**
- * male/legs/leg-01.glb은 animation을 제외한 것으로 보인다. 크기가 많이 줄어든다.
- */
 export function AvatarView() {
     const { currentAnimation, rootRef, blueprint } = useAvatar()
-    const { nodes: rootNodes, animations } = useGLTF(blueprint.skeleton.fileUrl) as GLTFResult
     const [mixer, setMixer] = useState<AnimationMixer | null>(null)
+
+    const { nodes: rootNodes, animations } = useGLTF(blueprint.skeleton.fileUrl) as GLTFResult
 
     useEffect(() => {
         const root = rootRef.current

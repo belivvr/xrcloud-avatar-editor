@@ -1,14 +1,23 @@
 import { useGLTF } from '@react-three/drei'
 import React, { MutableRefObject, ReactNode, useContext, useEffect, useRef, useState } from 'react'
-import { Group } from 'three'
+import { AnimationClip, Group, SkinnedMesh } from 'three'
 import { allAvatarBlueprints, loopThroughBlueprint } from '../blueprints'
+import { GLTFResult } from '../Preview/PartView'
 
 export interface AvatarContextValue {
+    // rootNodes: Record<string, SkinnedMesh>
+    // animations:AnimationClip[]
     blueprint: AvatarBlueprint
     currentAnimation: string
     parts: AvatarParts
     rootRef: MutableRefObject<Group | null>
+    setHair: (body: AvatarPart) => void
+    setFace: (body: AvatarPart) => void
     setBody: (body: AvatarPart) => void
+    setLeg: (body: AvatarPart) => void
+    setFoot: (body: AvatarPart) => void
+    setHand: (body: AvatarPart) => void
+    setGlass: (body: AvatarPart) => void
     setBlueprint: (blueprint: AvatarBlueprint) => void
     setCurrentAnimation: (clipName: string) => void
 }
@@ -54,6 +63,24 @@ export function AvatarProvider({ children }: { children: ReactNode }) {
         })
     }, [blueprint])
 
+    const setHair = (part: AvatarPart) => {
+        const newParts = {
+            ...parts,
+            Hair: part
+        }
+
+        setAvatarParts(newParts)
+    }
+
+    const setFace = (part: AvatarPart) => {
+        const newParts = {
+            ...parts,
+            Face: part
+        }
+
+        setAvatarParts(newParts)
+    }
+
     const setBody = (body: AvatarPart) => {
         const newParts = {
             ...parts,
@@ -63,12 +90,61 @@ export function AvatarProvider({ children }: { children: ReactNode }) {
         setAvatarParts(newParts)
     }
 
+    const setLeg = (part: AvatarPart) => {
+        const newParts = {
+            ...parts,
+            Leg: part
+        }
+
+        setAvatarParts(newParts)
+    }
+
+    const setFoot = (part: AvatarPart) => {
+        const newParts = {
+            ...parts,
+            Foot: part
+        }
+
+        setAvatarParts(newParts)
+    }
+
+    const setHand = (part: AvatarPart) => {
+        const newParts = {
+            ...parts,
+            Hand: part
+        }
+
+        setAvatarParts(newParts)
+    }
+
+    const setGlass = (part: AvatarPart) => {
+        const newParts = {
+            ...parts,
+            Glass: part
+        }
+
+        setAvatarParts(newParts)
+    }
+
+    // export type AvatarPartName = 'Hair' | 'Face' | 'Body' | 'Leg' | 'Foot' | 'Hand' | 'Glass'
+
+    // console.log(blueprint.skeleton.fileUrl)
+    // useGLTF(blueprint.skeleton.fileUrl) as GLTFResult
+
     const context = {
+        // rootNodes,
+        // animations,
         parts,
         rootRef,
         currentAnimation,
         blueprint,
+        setHair,
+        setFace,
         setBody,
+        setLeg,
+        setFoot,
+        setHand,
+        setGlass,
         setCurrentAnimation,
         setBlueprint
     }
