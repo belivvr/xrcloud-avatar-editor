@@ -1,24 +1,25 @@
 import styled from '@emotion/styled'
 import { useAvatar } from './contexts/AvatarContext'
+import { allAvatarBlueprints } from './blueprints'
 
 export function ToolContainer() {
-    const { setBody, setSkeleton, setCurrentAnimation } = useAvatar()
+    const { setBody, setBlueprint, setCurrentAnimation, blueprint } = useAvatar()
 
     return (
         <div>
             <Container>
-                <ChangeButton onClick={() => setSkeleton(0)}>Skeleton1</ChangeButton>
-                <ChangeButton onClick={() => setSkeleton(1)}>Skeleton2</ChangeButton>
+                <ChangeButton onClick={() => setBlueprint(allAvatarBlueprints[0])}>Female</ChangeButton>
+                <ChangeButton onClick={() => setBlueprint(allAvatarBlueprints[1])}>Male</ChangeButton>
             </Container>
             <Container>
-                <ChangeButton onClick={() => setCurrentAnimation('Running')}>Running</ChangeButton>
-                <ChangeButton onClick={() => setCurrentAnimation('Walking')}>Walking</ChangeButton>
                 <ChangeButton onClick={() => setCurrentAnimation('Idle')}>Idle</ChangeButton>
+                <ChangeButton onClick={() => setCurrentAnimation('Walking')}>Walking</ChangeButton>
+                <ChangeButton onClick={() => setCurrentAnimation('Running')}>Running</ChangeButton>
             </Container>
             <Container>
-                <ChangeButton onClick={() => setBody(0)}>Body1</ChangeButton>
-                <ChangeButton onClick={() => setBody(1)}>Body2</ChangeButton>
-                <ChangeButton onClick={() => setBody(2)}>Body3</ChangeButton>
+                <ChangeButton onClick={() => setBody(blueprint.bodies[0])}>Body1</ChangeButton>
+                <ChangeButton onClick={() => setBody(blueprint.bodies[1])}>Body2</ChangeButton>
+                <ChangeButton onClick={() => setBody(blueprint.bodies[2])}>Body3</ChangeButton>
             </Container>
         </div>
     )
