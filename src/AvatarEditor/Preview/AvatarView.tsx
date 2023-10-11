@@ -9,8 +9,8 @@ import { GLTFResult, PartView } from './PartView'
  * male/legs/leg-01.glb은 animation을 제외한 것으로 보인다. 크기가 많이 줄어든다.
  */
 export function AvatarView() {
-    const { currentAnimation, skeleton, rootRef } = useAvatar()
-    const { nodes: rootNodes, animations } = useGLTF(skeleton.fileUrl) as GLTFResult
+    const { currentAnimation, rootRef, blueprint } = useAvatar()
+    const { nodes: rootNodes, animations } = useGLTF(blueprint.skeleton.fileUrl) as GLTFResult
     const [mixer, setMixer] = useState<AnimationMixer | null>(null)
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export function AvatarView() {
                 mixer.uncacheRoot(root)
             }
         }
-    }, [rootRef, skeleton.fileUrl])
+    }, [rootRef, blueprint.skeleton.fileUrl])
 
     useEffect(() => {
         let clip: AnimationClip | null = null
@@ -70,7 +70,7 @@ export function AvatarView() {
                     <PartView name={'Hand'} rootNodes={rootNodes} />
                     <PartView name={'Foot'} rootNodes={rootNodes} />
                     <PartView name={'Glass'} rootNodes={rootNodes} />
-                    <primitive key={skeleton.fileUrl} object={rootNodes.Hips} />
+                    <primitive key={blueprint.skeleton.fileUrl} object={rootNodes.Hips} />
                 </group>
             </group>
         </group>

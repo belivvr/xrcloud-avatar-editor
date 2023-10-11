@@ -4,12 +4,12 @@ import { Group } from 'three'
 import { allAvatarBlueprints, loopThroughBlueprint } from '../blueprints'
 
 export interface AvatarContextValue {
-    skeleton: AvatarSkeleton
+    blueprint: AvatarBlueprint
     currentAnimation: string
     parts: AvatarParts
     rootRef: MutableRefObject<Group | null>
-    setBody: (bodyNo: number) => void
-    setSkeleton: (skeletonNo: number) => void
+    setBody: (body: AvatarPart) => void
+    setBlueprint: (blueprint: AvatarBlueprint) => void
     setCurrentAnimation: (clipName: string) => void
 }
 
@@ -38,48 +38,39 @@ export type AvatarParts = Record<AvatarPartName, AvatarPart | undefined>
 
 export const AvatarContext = React.createContext({} as AvatarContextValue)
 
-//  리팩토링 하다가 말았다
 export function AvatarProvider({ children }: { children: ReactNode }) {
     const rootRef = useRef<Group>(null)
-    const [avatarBlueprint, setAvatarBlueprint] = useState<AvatarBlueprint>(allAvatarBlueprints[0])
-    const [parts, setAvatarParts] = useState<AvatarParts>(makeAvatarInstance(avatarBlueprint))
-    const [skeleton, setAvatarSkeleton] = useState<AvatarSkeleton>(avatarBlueprint.skeleton)
+    const [blueprint, setBlueprint] = useState<AvatarBlueprint>(allAvatarBlueprints[0])
+    const [parts, setAvatarParts] = useState<AvatarParts>(makeAvatarInstance(blueprint))
     const [currentAnimation, setCurrentAnimation] = useState<string>('Idle')
 
     useEffect(() => {
-        loopThroughBlueprint(avatarBlueprint, (item) => {
+        const instance = makeAvatarInstance(blueprint)
+
+        setAvatarParts(instance)
+
+        loopThroughBlueprint(blueprint, (item) => {
             useGLTF.preload(item.fileUrl)
         })
-    }, [avatarBlueprint])
+    }, [blueprint])
 
-    const setBody = (bodyNo: number) => {
+    const setBody = (body: AvatarPart) => {
         const newParts = {
             ...parts,
-            Body: avatarBlueprint.bodies[bodyNo]
+            Body: body
         }
 
         setAvatarParts(newParts)
     }
 
-    const setSkeleton = (skeletonNo: number) => {
-        const blueprint = allAvatarBlueprints[skeletonNo]
-
-        setAvatarBlueprint(blueprint)
-        setAvatarSkeleton(blueprint.skeleton)
-
-        const instance = makeAvatarInstance(blueprint)
-
-        setAvatarParts(instance)
-    }
-
     const context = {
         parts,
         rootRef,
-        skeleton,
         currentAnimation,
+        blueprint,
         setBody,
         setCurrentAnimation,
-        setSkeleton
+        setBlueprint
     }
 
     return <AvatarContext.Provider value={context}>{children}</AvatarContext.Provider>
