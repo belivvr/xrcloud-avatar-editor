@@ -1,13 +1,14 @@
-import { AvatarBlueprint } from '../contexts/AvatarContext'
+import { AvatarBlueprint } from "../types";
 
 export const femaleAvatarBlueprint: AvatarBlueprint = {
     skeleton: {
-        fileUrl: '/avatars/female/skeleton.glb',
-        animations: ['Running', 'Walking', 'Idle']
+        fileUrl: '/avatars/female/skeleton.glb'
     },
     hairs: [{ fileUrl: '/avatars/female/hairs/hair-01.glb' }],
-    faces: [{ fileUrl: '/avatars/female/faces/face-01.glb' },
-    { fileUrl: '/avatars/female/faces/face-02.glb' }],
+    faces: [
+        { fileUrl: '/avatars/female/faces/face-01.glb' },
+        { fileUrl: '/avatars/female/faces/face-02.glb' }
+    ],
     bodies: [
         { fileUrl: '/avatars/female/bodies/body-01.glb' },
         { fileUrl: '/avatars/female/bodies/body-02.glb' },

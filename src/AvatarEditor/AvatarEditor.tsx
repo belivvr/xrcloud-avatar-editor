@@ -1,26 +1,26 @@
 import styled from '@emotion/styled'
 import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
-import { Preview } from './Preview'
-import { AvatarProvider } from './contexts/AvatarContext'
-import { ToolContainer } from './ToolContainer'
+import { AvatarDisplay } from './AvatarDisplay'
+import { AvatarProvider } from './AvatarContext'
+import { AvatarSelector } from './AvatarSelector'
 
 export function AvatarEditor() {
     return (
         <AvatarProvider>
-            <CanvasContainer>
+            <CanvasFrame>
                 <Suspense fallback={<p>로딩중...</p>}>
                     <StyledCanvas>
-                        <Preview />
+                        <AvatarDisplay />
                     </StyledCanvas>
                 </Suspense>
-            </CanvasContainer>
-            <ToolContainer />
+            </CanvasFrame>
+            <AvatarSelector />
         </AvatarProvider>
     )
 }
 
-const CanvasContainer = styled.div`
+const CanvasFrame = styled.div`
     width: 400px;
     height: 600px;
 `

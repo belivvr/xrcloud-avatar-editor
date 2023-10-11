@@ -1,13 +1,14 @@
 import { RefObject, useCallback, useRef, useState } from 'react'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { OrbitControls } from '@react-three/drei'
-import { AvatarView } from './AvatarView'
+import { AvatarAssembly } from './AvatarAssembly'
 import Light from './Light'
 
-const distanceRange = { min: 0.5, max: 1.5 }
+const minDistance = 0.5
+const maxDistance = 1.5
 const modelHeightRange = { min: -1.7, max: -1.2 }
 
-export function Preview(): JSX.Element {
+export function AvatarDisplay(): JSX.Element {
     const controlsRef = useRef<OrbitControlsImpl>(null)
     const orbitControlsRef: RefObject<OrbitControlsImpl> = controlsRef
 
@@ -15,7 +16,15 @@ export function Preview(): JSX.Element {
 
     const handleZoomChange = useCallback(() => {
         if (controlsRef.current) {
-            const newModelHeight = getHeightByDistance(controlsRef.current, distanceRange, modelHeightRange)
+            const {
+                object: { position },
+                target
+            } = controlsRef.current
+
+            const distance = position.distanceTo(target)
+            const distanceRatio = (distance - minDistance) / (maxDistance - minDistance)
+            const newModelHeight =
+                modelHeightRange.min + distanceRatio * (modelHeightRange.max - modelHeightRange.min)
 
             setModelHeight(newModelHeight)
         }
@@ -24,14 +33,14 @@ export function Preview(): JSX.Element {
     return (
         <group>
             <group position={[0, modelHeight, 0]}>
-                <AvatarView />
+                <AvatarAssembly />
                 <Light />
             </group>
 
             <OrbitControls
                 ref={orbitControlsRef}
-                minDistance={distanceRange.min}
-                maxDistance={distanceRange.max}
+                minDistance={minDistance}
+                maxDistance={maxDistance}
                 minPolarAngle={0.8}
                 maxPolarAngle={2}
                 enablePan={false}
@@ -41,25 +50,4 @@ export function Preview(): JSX.Element {
             />
         </group>
     )
-}
-
-interface Range {
-    min: number
-    max: number
-}
-
-const getHeightByDistance = (
-    controlsRef: OrbitControlsImpl,
-    distanceRange: Range,
-    heightRange: Range
-): number => {
-    const {
-        object: { position },
-        target
-    } = controlsRef
-
-    const distance = position.distanceTo(target)
-    const distanceRatio = (distance - distanceRange.min) / (distanceRange.max - distanceRange.min)
-
-    return heightRange.min + distanceRatio * (heightRange.max - heightRange.min)
 }

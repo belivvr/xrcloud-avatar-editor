@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
-import { useAvatar } from './contexts/AvatarContext'
+import { useAvatar } from './AvatarContext'
 import { allAvatarBlueprints } from './blueprints'
 
-export function ToolContainer() {
+export function AvatarSelector() {
     const { setBody, setBlueprint, setCurrentAnimation, blueprint, setFace,setFoot } = useAvatar()
 
     return (
