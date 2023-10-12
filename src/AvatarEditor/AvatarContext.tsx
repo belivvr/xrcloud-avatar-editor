@@ -1,13 +1,10 @@
-import { useGLTF } from '@react-three/drei'
-import React, { MutableRefObject, ReactNode, useContext, useEffect, useRef, useState } from 'react'
-import { Group } from 'three'
-import { allAvatarBlueprints, loopThroughBlueprint } from './blueprints'
+import React, { ReactNode, useContext, useEffect, useState } from 'react'
+import { allAvatarBlueprints } from './blueprints'
 import { AvatarBlueprint, AvatarPart } from './types'
 
 type SetPartType = (Hair: AvatarPart | undefined) => void
 
 interface AvatarContextValue {
-    rootRef: MutableRefObject<Group | null>
     blueprint: AvatarBlueprint
     setBlueprint: (blueprint: AvatarBlueprint) => void
     currentAnimation: string
@@ -31,7 +28,6 @@ interface AvatarContextValue {
 const AvatarContext = React.createContext({} as AvatarContextValue)
 
 export function AvatarProvider({ children }: { children: ReactNode }) {
-    const rootRef = useRef<Group>(null)
     const [blueprint, setBlueprint] = useState<AvatarBlueprint>(allAvatarBlueprints[0])
     const [currentAnimation, setCurrentAnimation] = useState<string>('Idle')
     const [Hair, setHair] = useState<AvatarPart>()
@@ -50,14 +46,9 @@ export function AvatarProvider({ children }: { children: ReactNode }) {
         setFoot(blueprint.feet[0])
         setHand(blueprint.hands[0])
         setGlass(undefined)
-
-        loopThroughBlueprint(blueprint, (item) => {
-            useGLTF.preload(item.fileUrl)
-        })
     }, [blueprint])
 
     const context = {
-        rootRef,
         currentAnimation,
         setCurrentAnimation,
         blueprint,

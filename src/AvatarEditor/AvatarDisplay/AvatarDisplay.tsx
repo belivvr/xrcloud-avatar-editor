@@ -1,28 +1,57 @@
-import { useState } from 'react'
+import styled from '@emotion/styled'
+import { useGLTF } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import { forwardRef, useImperativeHandle, useRef } from 'react'
+import { Group } from 'three'
+import { useAvatar } from '../AvatarContext'
+import { GLTFResult } from '../types'
+import { AvatarAnimation } from './AvatarAnimation'
 import { AvatarAssembly } from './AvatarAssembly'
+import { AvatarControls } from './AvatarControls'
+import { AvatarExporter, AvatarExporterHandles } from './AvatarExporter'
 import Light from './Light'
-import { AvatarDisplayControls } from './AvatarDisplayControls'
 
-export function AvatarDisplay(): JSX.Element {
-    const modelHeightMax = -1.2
-    const modelHeightMin = -1.7
+export const AvatarDisplay = forwardRef<AvatarExporterHandles, {}>((props, ref) => {
+    const rootRef = useRef<Group>(null)
 
-    const [modelHeight, setModelHeight] = useState<number>(modelHeightMax)
+    const { currentAnimation, blueprint, ...parts } = useAvatar()
+    const { nodes, animations } = useGLTF(blueprint.skeleton.fileUrl) as GLTFResult
+
+    // useEffect(() => {
+    //     loopThroughBlueprint(blueprint, (item) => {
+    //         useGLTF.preload(item.fileUrl)
+    //     })
+    // }, [blueprint])
+    const displayRef = useRef<AvatarExporterHandles | null>(null)
+
+    useImperativeHandle(ref, () => ({
+        exportAvatar: async (): Promise<ArrayBuffer | undefined> => {
+            return displayRef.current?.exportAvatar()
+        },
+        getSnapshot: (width: number, height: number): string | undefined => {
+            return displayRef.current?.getSnapshot(width,height)
+        }
+    }))
 
     return (
-        <group>
-            <group position={[0, modelHeight, 0]}>
-                <AvatarAssembly />
+        <StyledCanvas
+            gl={{
+                antialias: true,
+                preserveDrawingBuffer: true,
+                alpha: true
+            }}
+        >
+            <AvatarControls>
+                <AvatarAssembly skeletonNodes={nodes} rootRef={rootRef} parts={parts} />
                 <Light />
-            </group>
-
-            <group>
-                <AvatarDisplayControls
-                    setModelHeight={setModelHeight}
-                    modelHeightMax={modelHeightMax}
-                    modelHeightMin={modelHeightMin}
-                />
-            </group>
-        </group>
+            </AvatarControls>
+            <AvatarAnimation rootRef={rootRef} currentAnimation={currentAnimation} animations={animations} />
+            <AvatarExporter rootRef={rootRef} animations={animations} ref={displayRef} />
+        </StyledCanvas>
     )
-}
+})
+
+const StyledCanvas = styled(Canvas)`
+    width: 100%;
+    height: 100%;
+`

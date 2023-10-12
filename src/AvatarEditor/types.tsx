@@ -1,5 +1,5 @@
-import { MeshStandardMaterial, SkinnedMesh } from "three"
-import { GLTF } from "three-stdlib"
+import { MeshStandardMaterial, SkinnedMesh } from 'three'
+import { GLTF } from 'three-stdlib'
 
 export interface AvatarPart {
     fileUrl: string
