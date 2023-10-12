@@ -60,7 +60,7 @@ export function AvatarAssembly() {
                     <AvatarPart name='Hand' rootNodes={rootNodes} />
                     <AvatarPart name='Foot' rootNodes={rootNodes} />
                     <AvatarPart name='Glass' rootNodes={rootNodes} />
-                    <primitive key={blueprint.skeleton.fileUrl} object={rootNodes.Hips} />
+                    <primitive key={rootNodes.Hips.uuid} object={rootNodes.Hips} />
                 </group>
             </group>
         </group>

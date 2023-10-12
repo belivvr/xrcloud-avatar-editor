@@ -4,17 +4,19 @@ import { Suspense } from 'react'
 import { AvatarDisplay } from './AvatarDisplay'
 import { AvatarProvider } from './AvatarContext'
 import { AvatarSelector } from './AvatarSelector'
+import { ExportView } from './ExportView'
 
 export function AvatarEditor() {
     return (
         <AvatarProvider>
             <CanvasFrame>
-                <Suspense fallback={<p>로딩중...</p>}>
+                <Suspense fallback={<p>Loading...</p>}>
                     <StyledCanvas>
                         <AvatarDisplay />
                     </StyledCanvas>
                 </Suspense>
             </CanvasFrame>
+            <ExportView/>
             <AvatarSelector />
         </AvatarProvider>
     )
