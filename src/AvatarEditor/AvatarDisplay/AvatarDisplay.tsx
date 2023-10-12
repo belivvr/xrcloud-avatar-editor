@@ -11,25 +11,21 @@ import { AvatarControls } from './AvatarControls'
 import { AvatarExporter, AvatarExporterHandles } from './AvatarExporter'
 import Light from './Light'
 
+export type AvatarDisplayHandles = AvatarExporterHandles
+
 export const AvatarDisplay = forwardRef<AvatarExporterHandles, {}>((props, ref) => {
     const rootRef = useRef<Group>(null)
+    const exporterRef = useRef<AvatarExporterHandles | null>(null)
 
     const { currentAnimation, blueprint, ...parts } = useAvatar()
     const { nodes, animations } = useGLTF(blueprint.skeleton.fileUrl) as GLTFResult
 
-    // useEffect(() => {
-    //     loopThroughBlueprint(blueprint, (item) => {
-    //         useGLTF.preload(item.fileUrl)
-    //     })
-    // }, [blueprint])
-    const displayRef = useRef<AvatarExporterHandles | null>(null)
-
     useImperativeHandle(ref, () => ({
         exportAvatar: async (): Promise<ArrayBuffer | undefined> => {
-            return displayRef.current?.exportAvatar()
+            return exporterRef.current?.exportAvatar()
         },
-        getSnapshot: (width: number, height: number): string | undefined => {
-            return displayRef.current?.getSnapshot(width,height)
+        getSnapshot: (): string | undefined => {
+            return exporterRef.current?.getSnapshot()
         }
     }))
 
@@ -46,7 +42,7 @@ export const AvatarDisplay = forwardRef<AvatarExporterHandles, {}>((props, ref) 
                 <Light />
             </AvatarControls>
             <AvatarAnimation rootRef={rootRef} currentAnimation={currentAnimation} animations={animations} />
-            <AvatarExporter rootRef={rootRef} animations={animations} ref={displayRef} />
+            <AvatarExporter rootRef={rootRef} animations={animations} ref={exporterRef} />
         </StyledCanvas>
     )
 })

@@ -5,7 +5,7 @@ import { GLTFExporter } from 'three-stdlib'
 
 export interface AvatarExporterHandles {
     exportAvatar: () => Promise<ArrayBuffer | undefined>
-    getSnapshot: (width: number, height: number) => string | undefined
+    getSnapshot: () => string | undefined
 }
 
 interface Props {
@@ -36,7 +36,7 @@ export const AvatarExporter = forwardRef<AvatarExporterHandles, Props>(({ rootRe
 
             return undefined
         },
-        getSnapshot: (width: number, height: number): string | undefined => {
+        getSnapshot: (): string | undefined => {
             if (rootRef.current) {
                 const imageData = gl.domElement.toDataURL('image/png')
 
