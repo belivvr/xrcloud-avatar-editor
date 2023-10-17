@@ -9,7 +9,7 @@ export interface AvatarParts {
     Leg: AvatarPart | undefined
     Foot: AvatarPart | undefined
     Hand: AvatarPart | undefined
-    Glass: AvatarPart | undefined
+    Glasses: AvatarPart | undefined
 }
 
 interface Props {

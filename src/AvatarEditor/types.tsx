@@ -2,6 +2,7 @@ import { MeshStandardMaterial, SkinnedMesh } from 'three'
 import { GLTF } from 'three-stdlib'
 
 export interface AvatarPart {
+    name: string
     fileUrl: string
 }
 
@@ -18,7 +19,10 @@ export interface AvatarBlueprint {
 
 export interface AvatarSkeleton extends AvatarPart {}
 
-export type AvatarPartName = 'Hair' | 'Face' | 'Body' | 'Leg' | 'Foot' | 'Hand' | 'Glass'
+export const avatarAnimations = ['Idle', 'Walking', 'Running']
+
+export type AvatarPartName = 'Hair' | 'Face' | 'Body' | 'Leg' | 'Foot' | 'Hand' | 'Glasses'
+export const avatarPartNames: AvatarPartName[] = ['Hair', 'Face', 'Body', 'Leg', 'Foot', 'Hand', 'Glasses']
 
 export type AvatarParts = Record<AvatarPartName, AvatarPart | undefined>
 

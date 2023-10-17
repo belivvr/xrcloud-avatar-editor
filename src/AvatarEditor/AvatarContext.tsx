@@ -21,8 +21,8 @@ interface AvatarContextValue {
     setFoot: SetPartType
     Hand: AvatarPart | undefined
     setHand: SetPartType
-    Glass: AvatarPart | undefined
-    setGlass: SetPartType
+    Glasses: AvatarPart | undefined
+    setGlasses: SetPartType
 }
 
 const AvatarContext = React.createContext({} as AvatarContextValue)
@@ -36,7 +36,7 @@ export function AvatarProvider({ children }: { children: ReactNode }) {
     const [Leg, setLeg] = useState<AvatarPart>()
     const [Foot, setFoot] = useState<AvatarPart>()
     const [Hand, setHand] = useState<AvatarPart>()
-    const [Glass, setGlass] = useState<AvatarPart>()
+    const [Glasses, setGlasses] = useState<AvatarPart>()
 
     useEffect(() => {
         setHair(blueprint.hairs[0])
@@ -45,7 +45,7 @@ export function AvatarProvider({ children }: { children: ReactNode }) {
         setLeg(blueprint.legs[0])
         setFoot(blueprint.feet[0])
         setHand(blueprint.hands[0])
-        setGlass(undefined)
+        setGlasses(undefined)
     }, [blueprint])
 
     const context = {
@@ -65,8 +65,8 @@ export function AvatarProvider({ children }: { children: ReactNode }) {
         setFoot,
         Hand,
         setHand,
-        Glass,
-        setGlass
+        Glasses,
+        setGlasses
     }
 
     return <AvatarContext.Provider value={context}>{children}</AvatarContext.Provider>
