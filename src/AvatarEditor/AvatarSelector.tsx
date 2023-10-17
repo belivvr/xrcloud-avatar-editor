@@ -19,17 +19,6 @@ export function AvatarSelector() {
     return (
         <div>
             <Container>
-                Animations:
-                <select onChange={(event) => setCurrentAnimation(event.target.value)}>
-                    {avatarAnimations.map((animation, index) => (
-                        <option key={index} value={animation}>
-                            {animation}
-                        </option>
-                    ))}
-                </select>
-            </Container>
-
-            <Container>
                 Parts:
                 <SelectComponent
                     options={allAvatarBlueprints.map((blueprint) => blueprint.skeleton)}
@@ -59,6 +48,16 @@ export function AvatarSelector() {
                     options={blueprint.legs}
                     onChange={(event) => setLeg(blueprint.legs[parseInt(event.target.value)])}
                 />
+            </Container>
+            <Container>
+                Animations:
+                <select onChange={(event) => setCurrentAnimation(event.target.value)}>
+                    {avatarAnimations.map((animation, index) => (
+                        <option key={index} value={animation}>
+                            {animation}
+                        </option>
+                    ))}
+                </select>
             </Container>
         </div>
     )

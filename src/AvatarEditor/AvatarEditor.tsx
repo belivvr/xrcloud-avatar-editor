@@ -36,10 +36,15 @@ export function AvatarEditor() {
                         <AvatarDisplay ref={displayRef} />
                     </Suspense>
                 </CanvasFrame>
-                {avatarImage && <SnapshotView src={avatarImage} alt="Avatar Thumbnail" />} {/* 이미지 렌더링 */}
+                <div>
+                <SnapshotTitle>Snapshot</SnapshotTitle>
+                    {avatarImage && <SnapshotView src={avatarImage} alt="Avatar Thumbnail" />}
+                </div>
             </RowFrame>
-            <div onClick={handleDownloadGlb}>Download GLB</div>
-            <div onClick={handleSnapshot}>Snapshot</div>
+            <RowFrame>
+                <Button onClick={handleDownloadGlb}>Download GLB</Button>
+                <Button onClick={handleSnapshot}>Snapshot</Button>
+            </RowFrame>
             <AvatarSelector />
         </AvatarProvider>
     )
@@ -57,4 +62,22 @@ const SnapshotView = styled.img`
     width: 400px;
     height: 600px;
     background: #f8f8f8;
+`
+const SnapshotTitle = styled.div`
+    position: absolute;
+    width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+`
+const Button = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #336699;
 `
