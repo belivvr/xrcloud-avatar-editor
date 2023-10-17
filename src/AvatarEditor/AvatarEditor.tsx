@@ -79,5 +79,5 @@ const Button = styled.div`
     width: 150px;
     height: 40px;
     border-radius: 5px;
-    background-color: #336699;
+    background-color: #6699CC;
 `

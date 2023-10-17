@@ -1,25 +1,29 @@
 # XRCLOUD Avatar Editor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is an avatar editor used in the XRCLOUD service, a project based on Mozilla Hubs.
 
-## Available Scripts
+## Glossary
 
-In the project directory, you can run:
+-   Blueprint: A collection of the avatar's skeleton and the parts added to the skeleton. Here, there are Male/Female blueprints.
 
-### `npm start`
+## Creating Accessories and Custom Components
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+You can create custom components for the avatar by modeling the object in Blender. To add an avatar, refer to the following folders:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-   public/avatars/
+-   src/AvatarEditor/blueprints
 
-### `npm run build`
+The generated avatar file must include the following essential components:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   parts: Hand, Head
+-   animations: Walking, WalkingBackwards, Running, RunningBackward, Idle
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## License
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-   This is MIT licensed.
+-   The 3D models used in this app are ©2023-2024 by [CNU Metaversity](https://cnumeta.jnu.ac.kr/), under a [CC BY](https://creativecommons.org/licenses/by/4.0/) license.
+
+## About the editor
+
+-   The design of the avatar editor varies from service to service, so the source code is kept as simple as possible.
+-   This avatar editor serves as an example. If you are using a framework other than React, it must be rewritten to suit that framework.

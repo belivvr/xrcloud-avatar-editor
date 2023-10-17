@@ -19,8 +19,17 @@ export interface AvatarBlueprint {
 
 export interface AvatarSkeleton extends AvatarPart {}
 
-export const avatarAnimations = ['Idle', 'Walking', 'Running']
-
+export const avatarAnimations = [
+    'Idle',
+    'LeftStrafe',
+    'LeftStrafeWalk',
+    'RightStrafe',
+    'RightStrafeWalk',
+    'Running',
+    'RunningBackward',
+    'Walking',
+    'WalkingBackwards'
+]
 export type AvatarPartName = 'Hair' | 'Face' | 'Body' | 'Leg' | 'Foot' | 'Hand' | 'Glasses'
 export const avatarPartNames: AvatarPartName[] = ['Hair', 'Face', 'Body', 'Leg', 'Foot', 'Hand', 'Glasses']
 
