@@ -27,3 +27,4 @@ The generated avatar file must include the following essential components:
 
 -   The design of the avatar editor varies from service to service, so the source code is kept as simple as possible.
 -   This avatar editor serves as an example. If you are using a framework other than React, it must be rewritten to suit that framework.
+ 
