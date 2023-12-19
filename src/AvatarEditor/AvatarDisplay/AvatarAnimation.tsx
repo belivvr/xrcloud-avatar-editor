@@ -1,6 +1,6 @@
-import { useFrame } from "@react-three/fiber"
-import { MutableRefObject, useState, useCallback, useEffect } from "react"
-import { Group, AnimationClip, AnimationMixer } from "three"
+import { useFrame } from '@react-three/fiber'
+import { MutableRefObject, useCallback, useEffect, useState } from 'react'
+import { AnimationClip, AnimationMixer, Group } from 'three'
 
 interface Props {
     rootRef: MutableRefObject<Group | null>

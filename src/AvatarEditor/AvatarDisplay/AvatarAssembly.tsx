@@ -12,7 +12,7 @@ interface Props {
 export function AvatarAssembly({ rootRef, skeletonNodes, parts }: Props) {
     return (
         <group name="Scene">
-            <group name="Armature" ref={rootRef} position={[0, 0, 0]}>
+            <group name="AvatarRoot" ref={rootRef} position={[0, 0, 0]}>
                 {avatarPartNames.map((name) => (
                     <AvatarAssemblyPart key={name} name={name} parts={parts} skeletonNodes={skeletonNodes} />
                 ))}
